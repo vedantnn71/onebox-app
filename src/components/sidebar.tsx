@@ -45,11 +45,7 @@ const Sidebar = () => {
         <Icon name="bx-plus" />
       </Flex>
 
-      <Image
-        src={profile as string}
-        borderRadius="50%"
-        width="32px"
-      />
+      <Image src={profile as string} borderRadius="50%" width="32px" />
     </Flex>
   );
 };

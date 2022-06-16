@@ -4,12 +4,10 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Loading from "../components/loading";
 
 const Home: NextPage = () => {
-  const {data: session, status} = useSession();
+  const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
 
   if (!session) {
@@ -17,7 +15,7 @@ const Home: NextPage = () => {
       <>
         <Button onClick={() => signIn()}>Hiya! Sign in </Button>
       </>
-    )
+    );
   }
 
   if (session) {
@@ -28,14 +26,14 @@ const Home: NextPage = () => {
         <Heading>Signed in as {name}</Heading>
         <img src={profile} />
       </Box>
-    )
+    );
   }
 
   return (
     <>
       <Button onClick={() => signIn()}>Please sign in</Button>
     </>
-  )
+  );
 };
 
 export default Home;
