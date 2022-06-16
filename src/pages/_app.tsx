@@ -3,6 +3,7 @@ import { FC } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../components/theme";
+import "../styles/index.css";
 
 const App: FC<AppProps> = ({
   Component,
