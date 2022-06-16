@@ -3,7 +3,7 @@ import Icon from "./icon";
 
 const Loading = () => (
   <Flex
-    flexDirection="column"
+    direction="column"
     width="100vw"
     height="100vh"
     alignItems="center"
