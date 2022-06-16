@@ -1,3 +1,3 @@
 export default {
-  focusBorderColor: "red",
+  focusBorderColor: "blue",
 };
