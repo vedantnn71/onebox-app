@@ -1,0 +1,3 @@
+run = 'npm run dev'
+entrypoint = 'pages/index.jsx'
+NEXTAUTH_URL = 'https://onebox-app.vedantnandwana.repl.co'

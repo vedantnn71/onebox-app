@@ -1,0 +1,34 @@
+{
+  "name": "onebox",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ./src"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.1",
+    "@chakra-ui/theme-tools": "^2.0.2",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@next-auth/mongodb-adapter": "0.0.2-next.298",
+    "framer-motion": "^6.3.11",
+    "mongodb": "^4.7.0",
+    "next": "^12.1.6",
+    "next-auth": "^4.5.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.41",
+    "@types/react": "^18.0.12",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "12.0.1",
+    "prettier": "^2.7.0",
+    "ransh": "0.0.32",
+    "typescript": "^4.7.3"
+  }
+}
