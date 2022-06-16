@@ -25,5 +25,5 @@ export default extendTheme(
     },
     styles: styles,
   },
-  withDefaultColorScheme({ colorScheme: "red" })
+  withDefaultColorScheme({ colorScheme: "blue" })
 );
