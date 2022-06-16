@@ -110,7 +110,7 @@ const SignIn: FC<SignInProps> = ({ providers }) => {
   );
 };
 
-const getServerSideProps = async (context) => {
+const getServerSideProps = async () => {
   const providers = await getProviders();
 
   return {
