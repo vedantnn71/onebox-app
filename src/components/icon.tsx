@@ -13,6 +13,7 @@ const Icon: FC<IconProps> = ({
   size = "2xl",
   color = "blackAlpha.800",
   active = false,
+  ...props
 }) => (
   <Text
     className={`bx ${name}`}
@@ -22,6 +23,7 @@ const Icon: FC<IconProps> = ({
     borderRadius="md"
     backgroundColor={active ? "white" : ""}
     boxShadow={active ? "sm" : ""}
+    {...props}
   ></Text>
 );
 
