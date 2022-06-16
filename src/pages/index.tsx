@@ -1,11 +1,16 @@
 import type { NextPage } from "next";
 import { Button, Flex, Box, Heading, Text } from "@chakra-ui/react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import Image from "next/image";
 import Loading from "../components/loading";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  const {data: session, status} = useSession();
+
+  if (status === "loading") {
+    return (
+      <Loading />
+    )
+  }
 
   if (!session) {
     return (
@@ -17,8 +22,6 @@ const Home: NextPage = () => {
 
   if (session) {
     const { image: profile, name } = session.user;
-
-    console.log(session)
 
     return (
       <Box>
