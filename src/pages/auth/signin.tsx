@@ -66,8 +66,8 @@ const SignIn: FC<SignInProps> = ({ providers }) => {
             <Image src="/logo.svg" width={{ sm: "2.5rem", lg: "3rem" }} />
             <Heading
               color="brand.500"
-              size={{ sm: "lg", lg: "xl" }}
               fontWeight="bold"
+              size={{ sm: "lg", lg: "xl" }}
             >
               Onebox
             </Heading>
@@ -85,7 +85,7 @@ const SignIn: FC<SignInProps> = ({ providers }) => {
                   gap="1"
                   _hover={{ backgroundColor: "gray.200" }}
                   size="md"
-                  onClick={() => signIn(provider?.id)}
+                  onClick={() => signIn(provider?.id, { callbackUrl: "/" })}
                 >
                   <Icon
                     name={`bxl-${provider?.id}`}
