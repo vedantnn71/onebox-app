@@ -58,10 +58,9 @@ const SignIn: FC<SignInProps> = ({ providers }) => {
           paddingX="lg"
           paddingY="12"
           height="80vh"
-          width={{ sm: "70vw", lg: "40vw" }}
+          width={{ sm: "75vw", lg: "40vw" }}
           backdropFilter="blur(4px)"
         >
-          {/***** Logo *****/}
           <Flex direction="row">
             <Image src="/logo.svg" width={{ sm: "2.5rem", lg: "3rem" }} />
             <Heading
@@ -73,18 +72,17 @@ const SignIn: FC<SignInProps> = ({ providers }) => {
             </Heading>
           </Flex>
 
-          {/***** OAuth Buttons *****/}
-          <Flex>
+          <Flex direction="column" gap="1rem">
             {Object.values(providers).map((provider) => (
-              <Flex justify="center" direction="column" key={provider?.name}>
+              <Flex justify="center"  key={provider?.name}>
                 <Button
                   variant="outline"
                   colorScheme="gray"
-                  padding={{ sm: "3", lg: "5" }}
-                  fontWeight="550"
                   gap="1"
-                  _hover={{ backgroundColor: "gray.200" }}
+                  fontWeight="550"
                   size="md"
+                  minW="100%"
+                  padding={{ sm: "3", lg: "5" }}
                   onClick={() => signIn(provider?.id, { callbackUrl: "/" })}
                 >
                   <Icon
