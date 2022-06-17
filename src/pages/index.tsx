@@ -1,21 +1,19 @@
 import type { NextPage } from "next";
 import { Button, Flex, Box, Heading, Text } from "@chakra-ui/react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 import Loading from "../components/loading";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
-  if (status === "loading") {
-    return <Loading />;
+  if (status === "unauthenticated") {
+    router.push("/auth/signin");
   }
 
   if (!session) {
-    return (
-      <>
-        <Button onClick={() => signIn()}>Hiya! Sign in </Button>
-      </>
-    );
+    return <Loading />;
   }
 
   if (session) {
