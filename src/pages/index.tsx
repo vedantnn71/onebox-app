@@ -12,10 +12,6 @@ const Home: NextPage = () => {
     router.push("/auth/signin");
   }
 
-  if (!session) {
-    return <Loading />;
-  }
-
   if (session) {
     const { image: profile, name } = session.user;
 
@@ -27,11 +23,7 @@ const Home: NextPage = () => {
     );
   }
 
-  return (
-    <>
-      <Button onClick={() => signIn()}>Please sign in</Button>
-    </>
-  );
+  return <Loading />;
 };
 
 export default Home;
