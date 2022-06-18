@@ -13,14 +13,7 @@ const Home: NextPage = () => {
   }
 
   if (session) {
-    const { image: profile, name } = session.user;
-
-    return (
-      <Box>
-        <Heading>Signed in as {name}</Heading>
-        <img src={profile} />
-      </Box>
-    );
+    router.push("/app");
   }
 
   return <Loading />;

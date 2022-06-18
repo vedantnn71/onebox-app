@@ -1,13 +1,13 @@
 import NextAuth from "next-auth";
 import TwitterProvider from "next-auth/providers/twitter";
 import FacebookProvider from "next-auth/providers/facebook";
-import clientPromise from "./lib/mongodb";
+import mongoClient from "../lib/mongoClient";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   debug: true,
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(mongoClient),
   providers: [
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID,
