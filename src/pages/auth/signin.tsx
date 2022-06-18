@@ -5,7 +5,6 @@ import Link from "next/link";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 import {
   Flex,
-  Box,
   Heading,
   Link as ChakraLink,
   Image,
@@ -74,7 +73,7 @@ const SignIn: FC<SignInProps> = ({ providers }) => {
 
           <Flex direction="column" gap="1rem">
             {Object.values(providers).map((provider) => (
-              <Flex justify="center"  key={provider?.name}>
+              <Flex justify="center" key={provider?.name}>
                 <Button
                   variant="outline"
                   colorScheme="gray"
