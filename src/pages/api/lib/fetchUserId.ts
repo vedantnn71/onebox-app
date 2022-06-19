@@ -1,14 +1,7 @@
 import type { Db, Collection, WithId } from "mongodb";
 import { ObjectId } from "mongodb";
 import mongoClient from "./mongoClient";
-
-interface User {
-  _id: ObjectId;
-  name: string;
-  email: string;
-  image: string;
-  emailVerified: boolean | null;
-}
+import User from "./interfaces/user";
 
 const fetchUserId = async (email: string) => {
   const client = await mongoClient;
