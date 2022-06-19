@@ -1,6 +1,5 @@
 import type { Db, Collection, WithId } from "mongodb";
 import { ObjectId } from "mongodb";
-import { getSession } from "next-auth/react";
 import mongoClient from "./mongoClient";
 
 interface User {
@@ -11,18 +10,11 @@ interface User {
   emailVerified: boolean | null;
 }
 
-const fetchUserId = async (): Promise<ObjectId> => {
-  const session = await getSession();
-  
-  if (!session) {
-    throw new Error("Authentication error")
-  }
-
-  const { email } = session.user;
-  
-  const database: Db = mongoClient.db("main");
-  const users: Collection<User> = database.collection("users");
-  const user = users.findOne({ email });
+const fetchUserId = async (email: string) => {
+  const client = await mongoClient;
+  const database: Db = await client.db("main");
+  const users: Collection<User> = await database.collection("users");
+  const user = await users.findOne({ email });
 
   if (!user) {
     throw new Error("No user found")

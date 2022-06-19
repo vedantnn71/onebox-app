@@ -7,6 +7,7 @@ interface Account {
   type: string;
   providerAccountId?: string;
   access_token?: string;
+  refresh_token?: string;
   token_type?: string;
   userId: ObjectId;
   expires_at: number;
@@ -15,14 +16,15 @@ interface Account {
 }
 
 
-const fetchAccount = (userId: string): Promise<WithId<Account>> | null => {
-  if (!userId || !(ObjectId.isValid(userId))) {
+const fetchAccount = async (userId: ObjectId, provider: string) => {
+  if (!userId) {
     throw new Error("Invalid userId")
   }
 
-  const database: Db = mongoClient.db("main");
-  const accounts: Collection<Account> = database.collection("accounts");
-  const account = accounts.findOne({ userId: new ObjectId(userId) });
+  const client = await mongoClient;
+  const database: Db = await client.db("main");
+  const accounts: Collection<Account> = await database.collection("accounts");
+  const account = accounts.findOne({ userId: new ObjectId(userId), provider });
 
   if (!account) {
     return null;
