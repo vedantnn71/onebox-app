@@ -21,7 +21,7 @@ const fetchAccount = (userId: string): Promise<WithId<Account>> | null => {
   }
 
   const database: Db = mongoClient.db("main");
-  const accounts: Collection<Account> = database.collection("main");
+  const accounts: Collection<Account> = database.collection("accounts");
   const account = accounts.findOne({ userId: new ObjectId(userId) });
 
   if (!account) {
