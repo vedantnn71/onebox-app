@@ -4,7 +4,10 @@ import fetchUserId from "../lib/fetchUserId";
 import fetchAccount from "../lib/fetchAccount";
 import userTwitterClient from "../lib/twitter/userTwitterClient";
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const session = await getSession({ req });
 
   if (!session) {
@@ -22,6 +25,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   const messages = await twitterClient.directMessages.eventsList();
 
   return res.json(messages);
-}
+};
 
 export default handler;

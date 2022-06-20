@@ -10,10 +10,10 @@ const fetchUserId = async (email: string) => {
   const user = await users.findOne({ email });
 
   if (!user) {
-    throw new Error("No user found")
+    throw new Error("No user found");
   }
 
   return user._id;
-}
+};
 
 export default fetchUserId;

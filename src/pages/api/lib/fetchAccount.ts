@@ -5,7 +5,7 @@ import mongoClient from "./mongoClient";
 
 const fetchAccount = async (userId: ObjectId, provider: string) => {
   if (!userId) {
-    throw new Error("Invalid userId")
+    throw new Error("Invalid userId");
   }
 
   const client = await mongoClient;
@@ -18,6 +18,6 @@ const fetchAccount = async (userId: ObjectId, provider: string) => {
   }
 
   return account;
-}
+};
 
 export default fetchAccount;

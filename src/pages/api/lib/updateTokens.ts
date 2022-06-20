@@ -12,14 +12,17 @@ interface IUpdateTokens {
 const updateTokens = async ({
   accountId,
   accessToken,
-  refreshToken
+  refreshToken,
 }: IUpdateTokens) => {
   const client = await mongoClient;
   const database: Db = await client.db("main");
   const accounts: Collection<Account> = await database.collection("accounts");
-  const account = await accounts.findOneAndUpdate({ _id: accountId }, {
-    $set: { access_token: accessToken, refresh_token: refreshToken },
-  });
+  const account = await accounts.findOneAndUpdate(
+    { _id: accountId },
+    {
+      $set: { access_token: accessToken, refresh_token: refreshToken },
+    }
+  );
 
   return account;
 };

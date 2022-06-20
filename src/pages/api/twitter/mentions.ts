@@ -4,7 +4,10 @@ import userTwitterClient from "../lib/twitter/userTwitterClient";
 import fetchUserId from "../lib/fetchUserId";
 import fetchAccount from "../lib/fetchAccount";
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const session = await getSession({ req });
 
   if (!session) {
@@ -15,13 +18,13 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   const userAccount = await fetchAccount(userId, "twitter");
 
   if (userAccount === null) {
-    return res.status(400).send("No account found")
+    return res.status(400).send("No account found");
   }
 
   const twitterClient = await userTwitterClient(userAccount._id);
   const recentMentions = await twitterClient.tweets.statusesMentionsTimeline();
 
   return res.json(recentMentions);
-}
+};
 
 export default handler;

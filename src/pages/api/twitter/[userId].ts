@@ -4,7 +4,10 @@ import fetchUserId from "../lib/fetchUserId";
 import fetchAccount from "../lib/fetchAccount";
 import userTwitterClient from "../lib/twitter/userTwitterClient";
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const session = await getSession({ req });
   const { userId: userQuery } = req.query;
 
@@ -22,7 +25,9 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   const twitterClient = await userTwitterClient(userAccount._id);
 
   try {
-    const userDetails = await twitterClient.accountsAndUsers.usersShow({ screen_name: userQuery as string });
+    const userDetails = await twitterClient.accountsAndUsers.usersShow({
+      screen_name: userQuery as string,
+    });
     return res.json(userDetails);
   } catch (error) {
     if (error.statusCode === 404) {
@@ -31,6 +36,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
     return res.status(500);
   }
-}
+};
 
 export default handler;

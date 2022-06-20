@@ -16,13 +16,13 @@ const userTwitterClient = async (accountId: ObjectId) => {
 
   const { oauth_token, oauth_token_secret } = account;
   const twitterClient = new TwitterClient({
-    apiKey: process.env.TWITTER_CLIENT_ID, 
-    apiSecret: process.env.TWITTER_CLIENT_SECRET, 
+    apiKey: process.env.TWITTER_CLIENT_ID,
+    apiSecret: process.env.TWITTER_CLIENT_SECRET,
     accessToken: oauth_token,
-    accessTokenSecret: oauth_token_secret
-  })
+    accessTokenSecret: oauth_token_secret,
+  });
 
   return twitterClient;
-}
+};
 
 export default userTwitterClient;
