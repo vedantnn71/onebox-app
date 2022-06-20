@@ -1,9 +1,8 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import TwitterApi, { EDirectMessageEventTypeV1 } from "twitter-api-v2";
+import { TwitterClient } from "twitter-api-client";
 import fetchUserId from "../lib/fetchUserId";
 import fetchAccount from "../lib/fetchAccount";
-import updateTokens from "../lib/updateTokens";
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
@@ -20,16 +19,17 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   }
 
   const { oauth_token, oauth_token_secret } = userAccount;
-
-  const client = new TwitterApi({
-    appKey: process.env.CLIENT_ID,
-    appSecret: process.env.CLIENT_SECRET,
-    accessToken: oauth_token,
-    accessSecret: oauth_token_secret,
-  });
   
-  res.status(200)
+  const twitterClient = new TwitterClient({
+    apiKey: process.env.TWITTER_CLIENT_ID, 
+    apiSecret: process.env.TWITTER_CLIENT_SECRET, 
+    accessToken: oauth_token,
+    accessTokenSecret: oauth_token_secret
+  })
 
+  const recentMentions = await twitterClient.tweets.statusesMentionsTimeline();
+
+  return res.json(recentMentions);
 }
 
 export default handler;
