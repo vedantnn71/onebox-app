@@ -1,9 +1,8 @@
-import fetchUserId from "../lib/fetchUserId";
-import fetchAccount from "../lib/fetchAccount";
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-// import { TwitterClient } from "twitter-api-client";
-import TwitterApi from "twitter-api-v2";
+import { TwitterClient } from "twitter-api-client";
+import fetchUserId from "../lib/fetchUserId";
+import fetchAccount from "../lib/fetchAccount";
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
@@ -19,22 +18,18 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     return res.status(400).send("No account found")
   }
 
-  const { access_token, refresh_token } = userAccount;
+  const { oauth_token, oauth_token_secret } = userAccount;
+  
+  const twitterClient = new TwitterClient({
+    apiKey: process.env.TWITTER_CLIENT_ID, 
+    apiSecret: process.env.TWITTER_CLIENT_SECRET, 
+    accessToken: oauth_token,
+    accessTokenSecret: oauth_token_secret
+  })
 
-  const twitterClient = new TwitterApi({
-    clientId: process.env.TWITTER_OAUTH_TOKEN,
-    clientSecret: process.env.TWITTER_OAUTH_SECRET,
-  });
+  const recentMentions = await twitterClient.tweets.statusesMentionsTimeline();
 
-  const {
-    client,
-    accessToken,
-    refreshToken
-  } = await twitterClient.refreshOAuth2Token(refresh_token);
-
-  const { data }  = await client.v2.userTimeline("12");
-
-  return res.json(data)
+  return res.json(recentMentions);
 }
 
 export default handler;

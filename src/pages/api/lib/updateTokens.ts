@@ -3,23 +3,25 @@ import { ObjectId } from "mongodb";
 import mongoClient from "./mongoClient";
 import Account from "./interfaces/account";
 
-interface IUpdateAccessToken {
+interface IUpdateTokens {
   accountId: ObjectId;
   accessToken: string;
+  refreshToken: string;
 }
 
-const updateAccessToken = async ({
+const updateTokens = async ({
   accountId,
   accessToken,
-}: IUpdateAccessToken) => {
+  refreshToken
+}: IUpdateTokens) => {
   const client = await mongoClient;
   const database: Db = await client.db("main");
   const accounts: Collection<Account> = await database.collection("accounts");
-  const account = await accounts.findOneAndUpdate(accountId, {
-    $set: { access_token: accessToken },
+  const account = await accounts.findOneAndUpdate({ _id: accountId }, {
+    $set: { access_token: accessToken, refresh_token: refreshToken },
   });
 
   return account;
 };
 
-export default updateAccessToken;
+export default updateTokens;
