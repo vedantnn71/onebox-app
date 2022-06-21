@@ -51,19 +51,18 @@ const Sidebar = () => {
               </Button>
             ))}
           </Flex>
-    
+
           <Image src={profile as string} borderRadius="50%" width="32px" />
         </Flex>
         <MentionsBox />
       </Flex>
-      
+
       {oauthProviders.map((provider) => (
         <ConnectOAuthModal
           providerId={provider.name}
           {...provider.disclosure}
         />
       ))}
-      
     </>
   );
 };

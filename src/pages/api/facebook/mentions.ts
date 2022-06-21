@@ -5,13 +5,16 @@ import fetchUserId from "../lib/fetchUserId";
 import fetchAccount from "../lib/fetchAccount";
 import fetchPosts from "../lib/facebook/fetchPosts";
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const session = await getSession({ req });
 
   if (!session) {
     return res.status(401).send("Unauthorized");
   }
-  
+
   const userId = await fetchUserId(session.user.email);
   const userAccount = await fetchAccount(userId, "facebook");
 
@@ -24,8 +27,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   const me = await fetchPosts(access_token);
 
   console.log(me);
-  
-  return res.json(me)
-}
+
+  return res.json(me);
+};
 
 export default handler;

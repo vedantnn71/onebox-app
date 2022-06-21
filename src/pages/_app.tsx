@@ -12,16 +12,19 @@ const App: FC<AppProps> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: Infinity,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-      }
-    }
-  }))
-  
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: Infinity,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
+
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
