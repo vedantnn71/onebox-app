@@ -26,12 +26,14 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-query": "^3.39.1",
+    "react-twemoji": "^0.5.0",
     "twitter-api-client": "^1.5.2"
   },
   "devDependencies": {
     "@types/fb": "0.0.28",
     "@types/node": "^17.0.41",
     "@types/react": "^18.0.12",
+    "@types/react-twemoji": "^0.4.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.0.1",
     "prettier": "^2.7.0",
