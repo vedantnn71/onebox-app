@@ -24,7 +24,7 @@ interface NavigationProps {
 const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
   const { data: session } = useSession();
   const { image: profile } = session;
-  const { data: twitterUser, isError } = useQuery(
+  const { data: twitterUser, isLoading, isError } = useQuery(
     "fetchTwitterUser",
     async () => {
       const res = await axios.get("/api/twitter/$me");
@@ -41,7 +41,7 @@ const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
   ];
 
   const handleProviderClick = (provider: { name: string; disclosure: any }) => {
-    if (!twitterUser) provider.disclosure.onOpen();
+    if (!twitterUser && !isLoading) provider.disclosure.onOpen();
     setInbox({ show: !inbox.show, provider: provider.name });
   };
 
