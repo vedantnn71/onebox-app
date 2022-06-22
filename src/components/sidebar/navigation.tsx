@@ -1,7 +1,8 @@
-import { Flex, Button, Image, useDisclosure } from "@chakra-ui/react";
+import { Flex, Button, Image, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { FC, Dispatch, SetStateAction, useState } from "react";
 import { useQuery } from "react-query";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import Icon from "../icon";
 import Link from "next/link";
@@ -21,12 +22,13 @@ interface NavigationProps {
 const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
   const { data: session } = useSession();
   const { image: profile } = session;
-  const { data: twitterUser, isError, isLoading } = useQuery("fetchTwitterUser", async () => {
+  const { data: twitterUser, isError } = useQuery("fetchTwitterUser", async () => {
     const res = await axios.get("/api/twitter/$me");
     return res;
   })
   const twitterDisclosure = useDisclosure();
   const facebookDisclosure = useDisclosure();
+  const toast = useToast();
 
   const oauthProviders = [
     { name: "twitter", disclosure: twitterDisclosure },
@@ -37,6 +39,7 @@ const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
     if (!twitterUser) provider.disclosure.onOpen();
     setInbox({ show: !inbox.show, provider: provider.name })
   }
+
 
   return (
     <>
@@ -70,7 +73,7 @@ const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
           ))}
         </Flex>
   
-        <Image src={profile as string} borderRadius="50%" width="32px" />
+        <Image src={profile} borderRadius="50%" width="32px" />
       </Flex>
       
       {oauthProviders.map((provider) => (
@@ -79,6 +82,13 @@ const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
           {...provider.disclosure}
         />
       ))}
+      
+      {isError && (
+        toast({
+          status: "error",
+          title: "Error occured while getting your mentions and messages"
+        })
+      )}
     </>
   )
 }
