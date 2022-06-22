@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (
 
   if (userQuery === "$me") {
     const userDetails = await twitterClient.accountsAndUsers.usersShow({
-      user_id: userAccount.providerAccountId as string
+      user_id: userAccount.providerAccountId as string,
     });
 
     return res.json(userDetails);
@@ -36,16 +36,15 @@ const handler: NextApiHandler = async (
     const userDetails = await twitterClient.accountsAndUsers.usersShow({
       screen_name: userQuery as string,
     });
-    
+
     return res.json(userDetails);
-  } catch(error) {
+  } catch (error) {
     if (error.statusCode) {
-      return res.status(404).send("No user found")
+      return res.status(404).send("No user found");
     }
 
-    return res.status(500)
+    return res.status(500);
   }
-  
 };
 
 export default handler;

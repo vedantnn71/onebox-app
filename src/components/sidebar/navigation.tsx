@@ -9,23 +9,28 @@ import Link from "next/link";
 import ConnectOAuthModal from "../connectOAuthModal";
 
 interface NavigationProps {
-  setInbox: Dispatch<SetStateAction<{
-    show: boolean,
-    provider: string
-  }>>,
+  setInbox: Dispatch<
+    SetStateAction<{
+      show: boolean;
+      provider: string;
+    }>
+  >;
   inbox: {
-    show: boolean,
-    provider: string
-  }
+    show: boolean;
+    provider: string;
+  };
 }
 
 const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
   const { data: session } = useSession();
   const { image: profile } = session;
-  const { data: twitterUser, isError } = useQuery("fetchTwitterUser", async () => {
-    const res = await axios.get("/api/twitter/$me");
-    return res;
-  })
+  const { data: twitterUser, isError } = useQuery(
+    "fetchTwitterUser",
+    async () => {
+      const res = await axios.get("/api/twitter/$me");
+      return res;
+    }
+  );
   const twitterDisclosure = useDisclosure();
   const facebookDisclosure = useDisclosure();
   const toast = useToast();
@@ -35,11 +40,10 @@ const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
     { name: "facebook", disclosure: facebookDisclosure },
   ];
 
-  const handleProviderClick = (provider: { name: string, disclosure: any }) => {
+  const handleProviderClick = (provider: { name: string; disclosure: any }) => {
     if (!twitterUser) provider.disclosure.onOpen();
-    setInbox({ show: !inbox.show, provider: provider.name })
-  }
-
+    setInbox({ show: !inbox.show, provider: provider.name });
+  };
 
   return (
     <>
@@ -72,25 +76,24 @@ const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
             </Button>
           ))}
         </Flex>
-  
+
         <Image src={profile} borderRadius="50%" width="32px" />
       </Flex>
-      
+
       {oauthProviders.map((provider) => (
         <ConnectOAuthModal
           providerId={provider.name}
           {...provider.disclosure}
         />
       ))}
-      
-      {isError && (
+
+      {isError &&
         toast({
           status: "error",
-          title: "Error occured while getting your mentions and messages"
-        })
-      )}
+          title: "Error occured while getting your mentions and messages",
+        })}
     </>
-  )
-}
+  );
+};
 
 export default Navigation;
