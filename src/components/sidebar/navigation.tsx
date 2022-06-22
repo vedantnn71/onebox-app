@@ -1,12 +1,30 @@
 import { Flex, Button, Image, useDisclosure } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import { FC, Dispatch, SetStateAction, useState } from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
 import Icon from "../icon";
 import Link from "next/link";
 import ConnectOAuthModal from "../connectOAuthModal";
 
-const Navigation = () => {
+interface NavigationProps {
+  setInbox: Dispatch<SetStateAction<{
+    show: boolean,
+    provider: string
+  }>>,
+  inbox: {
+    show: boolean,
+    provider: string
+  }
+}
+
+const Navigation: FC<NavigationProps> = ({ setInbox, inbox }) => {
   const { data: session } = useSession();
   const { image: profile } = session;
+  const { data: twitterUser, isError, isLoading } = useQuery("fetchTwitterUser", async () => {
+    const res = await axios.get("/api/twitter/$me");
+    return res;
+  })
   const twitterDisclosure = useDisclosure();
   const facebookDisclosure = useDisclosure();
 
@@ -14,6 +32,11 @@ const Navigation = () => {
     { name: "twitter", disclosure: twitterDisclosure },
     { name: "facebook", disclosure: facebookDisclosure },
   ];
+
+  const handleProviderClick = (provider: { name: string, disclosure: any }) => {
+    if (!twitterUser) provider.disclosure.onOpen();
+    setInbox({ show: !inbox.show, provider: provider.name })
+  }
 
   return (
     <>
@@ -40,7 +63,7 @@ const Navigation = () => {
             <Button
               colorScheme="white"
               variant="ghost"
-              onClick={provider.disclosure.onOpen}
+              onClick={() => handleProviderClick(provider)}
             >
               <Icon name={`bxl-${provider.name}`} />
             </Button>
